@@ -5,6 +5,8 @@ import Modal from './components/Modal.vue';
 const tasks = ref([]);
 const currentTask = ref(null);
 const isModalVisible = ref(false);
+const orderAsc = ref(false);
+
 
 const get_tasks = async () => {
   try {
@@ -20,11 +22,13 @@ const get_tasks = async () => {
 
 onMounted(() => {
   get_tasks();
+
 });
 
 
 
 const handleSubmit = async (formData) => {
+  console.log(tasks.value[0]);
   try {
   
     if (currentTask.value) {
@@ -93,6 +97,39 @@ const deleteTask = async (taskId) => {
 function formatDate(date) {
   return new Date(date).toLocaleDateString('es-ES');
 }
+
+const markAsDoneTask = async (taskId) => {
+  try{
+
+    const currentTask = tasks.value.filter(task => task.id == taskId)
+    const choice = !currentTask[0].is_done
+
+    await $fetch(`/tasks/${taskId}`, {
+      method: 'PUT',
+      body: {
+        ...currentTask.value,
+        is_done: choice,
+        updated_at: new Date().toISOString()
+      },
+      baseURL: useRuntimeConfig().public.apiBase
+    });
+  } catch (error) {
+    console.log("Error marking task as done:", error);
+  }
+
+  await get_tasks()
+
+}
+
+const orderByTime = () => {
+
+  orderAsc.value = !orderAsc.value;
+
+  tasks.value.sort((a, b) => orderAsc.value ? new Date(a.created_at) - new Date(b.created_at) : new Date(b.created_at) - new Date(a.created_at));
+
+
+}
+
 </script>
 
 <template>
@@ -101,41 +138,78 @@ function formatDate(date) {
       <h1 class="text-vue-green text-4xl font-bold text-center mb-10">Tasks</h1>
     </div>
     
-    <div class="border border-vue-green rounded-lg p-10">
-      <div class="flex flex-col ">
-        <div v-for="task in tasks" :key="task.id" class="rounded-lg p-5 shadow-lg mb-4 bg-card-grey bg-opacity-20">
-          <div class="flex justify-between items-center"> 
-            <div>
-              <h1 class="text-3xl font-bold text-vue-green">{{ task.title }}</h1>
-              <p class="text-xl text-vue-green text-opacity-40 ml-2" style="opacity: 0.7;">{{ task.description }}</p>
-              <div v-if="task.updated_at == null">
+    <div class="flex flex-col md:flex-row justify-between gap-10">
+      
+      <div class="border border-vue-green rounded-lg p-10 w-full">
+        <div class="flex justify-between items-center">
+          <h2 class="text-2xl font-bold text-vue-green mb-4">To do</h2>
+        </div>
+        
+        <div class="flex flex-col" v-auto-animate>
+          <div  v-for="task in tasks.filter(task => !task.is_done)" :key="task.id" class="rounded-lg p-5 shadow-lg mb-4 bg-card-grey bg-opacity-20">
+            <div class="flex justify-between items-center">
+              <div>
+                <h1 class="text-3xl font-bold text-vue-green">{{ task.title }}</h1>
+                <p class="text-xl text-vue-green text-opacity-40 ml-2">{{ task.description }}</p>
                 <p class="text-xs text-white text-opacity-40 mt-3">{{ formatDate(task.created_at) }}</p>
               </div>
-              <div v-else>
-                <p class="text-xs text-white text-opacity-40 mt-3">{{ formatDate(task.updated_at) }}</p>
+              <div class="flex gap-2">
+                <button @click="openEditModal(task)">
+                  <font-awesome-icon icon="pencil-alt" class="text-vue-green"/>
+                </button>
+                <button class="p-2" @click="deleteTask(task.id)">
+                  <font-awesome-icon icon="trash" class="text-vue-green"/>
+                </button>
+                <button @click="markAsDoneTask(task.id)">
+                  <font-awesome-icon icon="xmark" class="text-vue-green"/>
+                </button>
+                
               </div>
             </div>
-            <div class="flex gap-2"> 
-              <button 
-                class="bg-blue-500 text-white rounded-lg p-2" 
-                @click="openEditModal(task)">
-                <font-awesome-icon icon="pencil-alt" class="text-vue-green"/>
-              </button>
-              <button 
-                class="bg-red-500 text-white rounded-lg p-2" 
-                @click="deleteTask(task.id)">
-                <font-awesome-icon icon="trash" class="text-vue-green"/>
-              </button>
+          </div>
+        </div>
+        
+      </div>
+  
+      
+      <div class="border border-vue-green rounded-lg p-10 w-full">
+        <div class="flex justify-between items-center">
+          <h2 class="text-2xl font-bold text-vue-green mb-4">Done</h2>
+          
+        </div>
+        <div class="flex flex-col" v-auto-animate>
+          <div v-for="task in tasks.filter(task => task.is_done)" :key="task.id" class="rounded-lg p-5 shadow-lg mb-4 bg-card-grey bg-opacity-20 ">
+            <div class="flex justify-between items-center">
+              <div>
+                <h1 class="text-3xl font-bold text-vue-green">{{ task.title }}</h1>
+                <p class="text-xl text-vue-green text-opacity-40 ml-2">{{ task.description }}</p>
+                <p class="text-xs text-white text-opacity-40 mt-3">{{ formatDate(task.updated_at || task.created_at) }}</p>
+              </div>
+              <div class="flex gap-2">
+                <button @click="openEditModal(task)">
+                  <font-awesome-icon icon="pencil-alt" class="text-vue-green"/>
+                </button>
+                <button class="p-2" @click="deleteTask(task.id)">
+                  <font-awesome-icon icon="trash" class="text-vue-green"/>
+                </button>
+                <button @click="markAsDoneTask(task.id)">
+                  <font-awesome-icon icon="check" class="text-vue-green"/>
+                </button>
+              </div>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
     </div>
+    
     <div class="flex justify-end">
-      <button class="bg-vue-green text-white rounded-lg p-2 mt-5 mb-10" @click="openModal">Add Task</button>
+      <button class="bg-vue-green text-white rounded-lg p-2 mt-5 justify-end mb-4 mr-2" @click="orderByTime()">Order {{ orderAsc ? 'Ascending' : 'Descending' }}</button>
+      <button class="bg-vue-green text-white rounded-lg p-2 mt-5 justify-end mb-4" @click="openModal">Add Task</button>
       <Modal :isVisible="isModalVisible" @close="closeModal" @submit="handleSubmit" :task="currentTask"/>
     </div>
+    
   </div>
+  
 </template>
 
 <style scoped>
