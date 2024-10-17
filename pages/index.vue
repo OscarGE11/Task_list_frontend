@@ -98,7 +98,7 @@ function formatDate(date) {
   return new Date(date).toLocaleDateString('es-ES');
 }
 
-const markAsDoneTask = async (taskId) => {
+const handleIsDone = async (taskId) => {
   try{
 
     const currentTask = tasks.value.filter(task => task.id == taskId)
@@ -160,7 +160,7 @@ const orderByTime = () => {
                 <button class="p-2" @click="deleteTask(task.id)">
                   <font-awesome-icon icon="trash" class="text-vue-green"/>
                 </button>
-                <button @click="markAsDoneTask(task.id)">
+                <button @click="handleIsDone(task.id)">
                   <font-awesome-icon icon="xmark" class="text-vue-green"/>
                 </button>
                 
@@ -192,7 +192,7 @@ const orderByTime = () => {
                 <button class="p-2" @click="deleteTask(task.id)">
                   <font-awesome-icon icon="trash" class="text-vue-green"/>
                 </button>
-                <button @click="markAsDoneTask(task.id)">
+                <button @click="handleIsDone(task.id)">
                   <font-awesome-icon icon="check" class="text-vue-green"/>
                 </button>
               </div>
