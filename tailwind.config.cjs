@@ -20,6 +20,7 @@ module.exports = {
         red: '#ff4c4c',
         blue: '#42a5f5',
         'card-grey': '#646464',
+        'lighter-card-grey': '#4B4B4B',
       },
     },
   },

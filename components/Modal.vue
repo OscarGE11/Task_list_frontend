@@ -2,9 +2,6 @@
 import { defineProps, defineEmits, watch } from 'vue';
 import { reactive } from 'vue';
 
-
-
-
     const props = defineProps({
         isVisible: {
             type: Boolean,
@@ -45,6 +42,7 @@ import { reactive } from 'vue';
         emit('submit', formData);
         closeModal();
     }
+
 
 </script>
 <template>
