@@ -1,7 +1,5 @@
 <template>
-  <NuxtLayout>
-    <NuxtRouteAnnouncer />
-    <!-- Elimina el componente de bienvenida -->
+  <NuxtLayout> 
     <NuxtPage />
   </NuxtLayout>
 </template>
