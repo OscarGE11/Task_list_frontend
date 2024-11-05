@@ -34,6 +34,7 @@
         >
           Sign Up
         </button>
+        <p>Already have an account? <NuxtLink to="/login" class="text-vue-green hover:underline">Login</NuxtLink></p>
       </form>
     </div>
   </div>

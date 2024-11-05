@@ -16,7 +16,7 @@
       </div>
       
         <button type="submit" class="mt-5 bg-vue-green text-white rounded-lg p-2 justify-end mb-4 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150 w-full">Sign in</button>
-      
+        <p>Don't have an account? <NuxtLink to="/register" class="text-vue-green hover:underline">Register</NuxtLink></p>
     </form>
    </div>
     
