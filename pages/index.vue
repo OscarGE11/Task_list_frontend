@@ -34,6 +34,8 @@
                 </button>
                 
               </div>
+
+
             </div>
           </div>
         </div>
@@ -74,20 +76,27 @@
     <Modal :isVisible="isModalVisible" @close="closeModal" @submit="handleSubmit" :task="currentTask"/>
     
   </div>
-  
+  <div class="flex justify-end py-7 pr-20">
+    <button @click="logout" class="bg-vue-green text-black rounded-lg p-2 mx-auto justify-end mb-4 mr-28 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150">Logout</button>
+  </div>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
 import Modal from './components/Modal.vue';
 import { jwtDecode } from 'jwt-decode';
+import { useRouter} from 'vue-router';
 
-
+const router = useRouter()
 const tasks = ref([]);
 const currentTask = ref(null);
 const isModalVisible = ref(false);
 const orderAsc = ref(false);
 const token = useCookie('access_token');
 
+
+definePageMeta({
+  middleware: ['auth'],
+});
 
 const get_tasks = async () => {
   try {
@@ -101,6 +110,11 @@ const get_tasks = async () => {
   }
 };
 
+const logout = () => {
+  document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+  token.value = null;
+  router.push('/login');
+}
 
 const getUserIdFromToken = () => {
   if (!token.value) {
