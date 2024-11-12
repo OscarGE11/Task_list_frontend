@@ -28,10 +28,6 @@
             required
           />
         </div>
-        
-        <div class="w-full mt-2 transition-opacity duration-300 ease-in-out" :class="passwordErrorState ? 'opacity-100' : 'opacity-0'">
-          <p class="text-red-500 text-sm">{{ passwordErrorMsg }}</p>
-        </div>
         <button
           type="submit"
           class="mt-5 bg-vue-green text-white rounded-lg p-2 justify-end mb-4 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150 w-full"
@@ -39,6 +35,7 @@
           Sign Up
         </button>
         <p>Already have an account? <NuxtLink to="/login" class="text-vue-green hover:underline">Login</NuxtLink></p>
+        <p class="text-red w-32 text-center mt-2" v-if="passwordErrorState">{{ passwordErrorMsg }}</p>
       </form>
     </div>
   </div>
