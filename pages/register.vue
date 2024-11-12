@@ -60,8 +60,8 @@ const register = async () => {
       credentials: 'include',
     });
 
-      
-      await router.push('/docs'); 
+      alert('Registration successful');
+      await router.push('/'); 
    
   } catch (error) {
     console.error("Error during registration", error);
