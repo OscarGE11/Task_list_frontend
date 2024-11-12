@@ -34,9 +34,8 @@
         >
           Sign Up
         </button>
-        <p class="text-red" v-if="emailError">Invalid email</p>
-        <p class="text-red" v-if="passwordError">Password must be at least 8 characters long</p>
         <p>Already have an account? <NuxtLink to="/login" class="text-vue-green hover:underline">Login</NuxtLink></p>
+        <p class="text-red" v-if="passwordErrorState">{{ passwordErrorMsg }}</p>
       </form>
     </div>
   </div>
@@ -49,29 +48,42 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const email = ref('');
 const password = ref('');
-const emailError = ref(false);
-const passwordError = ref(false);
+const passwordErrorState = ref(false);
+const passwordErrorMsg = ref('');
 
-const validateEmail = (email) => {
-  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-};
 
 const validatePassword = (password) => {
-  const regex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  return regex.test(password);
+  
+  if (password.length === 0) {
+    return "Password cannot be empty";
+  }
+  
+  if (password.length < 8) {
+    return "Password must be at least 8 characters long";
+  }
+  
+ 
+  if (!/[A-Z]/.test(password)) {
+    return "Password must contain at least one uppercase letter";
+  }
+  
+ 
+  if (!/\d/.test(password)) {
+    return "Password must contain at least one number";
+  }
+
+ 
+  return "Password is valid";
 };
 
 const register = async () => {
   try {
 
-    if (!validateEmail(email.value)) {
-      emailError.value = true;
-      return;
-    }
+  
 
     if (!validatePassword(password.value)) {
-      passwordError.value = true;
+      passwordErrorState.value = true;
+      passwordErrorMsg.value = validatePassword(password.value);
       return;
     }
 
