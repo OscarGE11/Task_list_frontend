@@ -57,7 +57,9 @@ const validatePassword = (password) => {
 };
 
 const register = async () => {
-  try {
+
+  passwordErrorState.value = false;
+  passwordErrorMsg.value = '';
 
   if (!validatePassword(password.value)) {
     passwordErrorState.value = true;
@@ -65,6 +67,8 @@ const register = async () => {
     return;
   }
 
+
+  try {
     const response = await $fetch('/register', {
       method: 'POST',
       body: {
