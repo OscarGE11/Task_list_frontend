@@ -124,7 +124,7 @@ const getUserIdFromToken = () => {
     const decodedToken = jwtDecode(token.value);
     return decodedToken.id;
   } catch (error) {
-    console.error('Error decoding token:', error);
+    console.error('Error fetching tasks:', error);
     return null;
   }
 };
@@ -240,7 +240,7 @@ const handleIsDone = async (taskId) => {
       
     });
   } catch (error) {
-    console.log("Error marking task as done:", error);
+    console.error("Error marking task as done:", error);
   }
 
   await get_tasks()

@@ -56,15 +56,15 @@ const login = async () => {
           tokenCookie.value = response.access_token
           await router.push('/')
         } else {
-          console.log("No token");
+          console.error("No token");
         }
       } else {
-        console.log("Login failed");
+        console.error("Login failed");
       }
 
     }
   catch (error) {
-  console.log("Error logging in", error)
+  console.error("Error logging in", error)
     }
   }
 
