@@ -60,7 +60,7 @@ const register = async () => {
       credentials: 'include',
     });
 
-      alert('Registration successful');
+      
       if (response) {
        if (response.access_token) {
          const tokenCookie = useCookie('access_token')
