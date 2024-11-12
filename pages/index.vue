@@ -7,7 +7,7 @@
       <button class="bg-vue-green text-black rounded-lg p-2 mt-5 justify-end mb-4 mr-2 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="orderByTime()">Order {{ orderAsc ? 'Ascending' : 'Descending' }}</button>
       <button class="bg-vue-green text-black rounded-lg p-2 mt-5 justify-end mb-4 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="openModal">Add Task</button>
     </div>
-    <div class="flex flex-col md:flex-row justify-between gap-10">
+    <div class="flex flex-col md:flex-row justify-between gap-10" v-if="tasks.length > 0">
       
       <div class="p-10 w-full">
         
