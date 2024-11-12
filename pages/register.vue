@@ -61,8 +61,16 @@ const register = async () => {
     });
 
       alert('Registration successful');
-      await router.push('/'); 
-   
+      if (response) {
+       if (response.access_token) {
+         const tokenCookie = useCookie('access_token')
+         tokenCookie.value = response.access_token
+         await router.push('/') 
+       }
+       else {
+        console.error("No token received");
+       }
+      }
   } catch (error) {
     console.error("Error during registration", error);
   }
