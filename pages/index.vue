@@ -3,7 +3,7 @@
     <div>
       <h1 class="text-vue-green text-4xl font-bold text-center mb-10">Tasks</h1>
     </div>
-    <div class="flex justify-end">
+    <div class="flex justify-end" v-if="tasks.length > 0">
       <button class="bg-vue-green text-black rounded-lg p-2 mt-5 justify-end mb-4 mr-2 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="orderByTime()">Order {{ orderAsc ? 'Ascending' : 'Descending' }}</button>
       <button class="bg-vue-green text-black rounded-lg p-2 mt-5 justify-end mb-4 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="openModal">Add Task</button>
     </div>
@@ -76,7 +76,7 @@
     <Modal :isVisible="isModalVisible" @close="closeModal" @submit="handleSubmit" :task="currentTask"/>
     
   </div>
-  <div class="flex justify-end py-7 pr-20">
+  <div class="flex justify-end py-7 pr-20" v-if="tasks.length > 0">
     <button @click="logout" class="bg-vue-green text-black rounded-lg p-2 mx-auto justify-end mb-4 mr-28 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150">Logout</button>
   </div>
 </template>
