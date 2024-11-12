@@ -1,11 +1,11 @@
 <template>
   <div class="flex items-center justify-center min-h-screen">
-    <div class="p-10 bg-lighter-card-grey rounded-lg shadow-lg">
+    <div class="p-10 bg-lighter-card-grey rounded-lg shadow-lg w-full max-w-md">
       <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-vue-green">Create an Account</h1>
         <p class="text-light-gray mt-2">Sign up to get started</p>
       </div>
-      <form @submit.prevent="register">
+      <form @submit.prevent="register" class="flex flex-col">
         <div>
           <label for="email">Email</label>
           <input
@@ -35,7 +35,10 @@
           Sign Up
         </button>
         <p>Already have an account? <NuxtLink to="/login" class="text-vue-green hover:underline">Login</NuxtLink></p>
-        <p class="text-red w-32 text-center mt-2" v-if="passwordErrorState">{{ passwordErrorMsg }}</p>
+        <div class="mt-5">
+          <p class="text-red text-sm max-w-full overflow-hidden text-ellipsis" v-if="passwordErrorState">{{ passwordErrorMsg }}</p>
+        </div>
+        
       </form>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-center min-h-screen">
-   <div class="p-10 bg-lighter-card-grey rounded-lg shadow-lg">
+   <div class="p-10 bg-lighter-card-grey rounded-lg shadow-lg w-full max-w-md">
     <div class="text-center mb-8">
       <h1 class="text-3xl font-bold text-vue-green">Welcome back</h1>
       <p class="text-light-gray mt-2">Sign in to your account</p>
@@ -17,6 +17,10 @@
       
         <button type="submit" class="mt-5 bg-vue-green text-white rounded-lg p-2 justify-end mb-4 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150 w-full">Sign in</button>
         <p>Don't have an account? <NuxtLink to="/register" class="text-vue-green hover:underline">Register</NuxtLink></p>
+
+        <div class="mt-5">
+          <p class="text-red text-sm max-w-full overflow-hidden text-ellipsis" v-if="passwordErrorState">{{ passwordErrorMsg }}</p>
+        </div>
     </form>
    </div>
     
