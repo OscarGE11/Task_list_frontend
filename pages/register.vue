@@ -34,6 +34,8 @@
         >
           Sign Up
         </button>
+        <p class="text-red" v-if="emailError">Invalid email</p>
+        <p class="text-red" v-if="passwordError">Password must be at least 8 characters long</p>
         <p>Already have an account? <NuxtLink to="/login" class="text-vue-green hover:underline">Login</NuxtLink></p>
       </form>
     </div>
@@ -47,9 +49,32 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const email = ref('');
 const password = ref('');
+const emailError = ref(false);
+const passwordError = ref(false);
+
+const validateEmail = (email) => {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+};
+
+const validatePassword = (password) => {
+  const regex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  return regex.test(password);
+};
 
 const register = async () => {
   try {
+
+    if (!validateEmail(email.value)) {
+      emailError.value = true;
+      return;
+    }
+
+    if (!validatePassword(password.value)) {
+      passwordError.value = true;
+      return;
+    }
+
     const response = await $fetch('/register', {
       method: 'POST',
       body: {
