@@ -5,9 +5,10 @@ import {
   faPencilAlt,
   faCheck,
   faXmark,
+  faArrowRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faTrash, faPencilAlt, faCheck, faXmark);
+library.add(faTrash, faPencilAlt, faCheck, faXmark, faArrowRightFromBracket);
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component('font-awesome-icon', FontAwesomeIcon);

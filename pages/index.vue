@@ -1,17 +1,18 @@
 <template>
+  <header class="container mx-auto mt-10 justify-between flex items-center">
+    <h1 class="text-vue-green text-4xl font-bold">Tasks</h1>
+    <span @click="logout" title="Logout" class="text-vue-green cursor-pointer font-bold text-2xl"><font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" /></span>
+    
+  </header>
   <div class="container mx-auto pt-10">
-    <div>
-      <h1 class="text-vue-green text-4xl font-bold text-center mb-10">Tasks</h1>
-    </div>
-    <div class="flex justify-end" >
-      <button class="bg-vue-green text-black rounded-lg p-2 mt-5 justify-end mb-4 mr-2 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="orderByTime()" v-if="tasks.length > 0">Order {{ orderAsc ? 'Ascending' : 'Descending' }}</button>
-      <button class="bg-vue-green text-black rounded-lg p-2 mt-5 justify-end mb-4 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="openModal">Add Task</button>
-    </div>
+    
+    
 
     
     <div v-if="tasks.length === 0" class="flex justify-center items-center h-60 bg-card-grey bg-opacity-20 rounded-lg shadow-lg">
-      <p class="text-vue-green text-lg font-bold">No tienes tareas añadidas todavía</p>
+      <p class="text-vue-green text-lg font-bold">You have no tasks added yet</p>
     </div>
+    
 
    
     <div class="flex flex-col md:flex-row justify-between gap-10" v-if="tasks.length > 0">
@@ -69,11 +70,19 @@
     </div>
     
     <Modal :isVisible="isModalVisible" @close="closeModal" @submit="handleSubmit" :task="currentTask"/>
-  </div>
 
-  <div class="flex justify-end py-7 pr-20" v-if="tasks.length > 0">
-    <button @click="logout" class="bg-vue-green text-black rounded-lg p-2 mx-auto justify-end mb-4 mr-28 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150">Logout</button>
+
+    <div class="flex justify-between">
+  <button class="bg-vue-green text-black rounded-lg p-2 mt-5 mb-4 mr-2 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="orderByTime()" v-if="tasks.length > 0">
+    Order {{ orderAsc ? 'Ascending' : 'Descending' }}
+  </button>
+  <button class="bg-vue-green text-black rounded-lg p-2 mt-5 mb-4 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="openModal">
+    Add Task
+  </button>
+</div>
   </div>
+  
+  
 </template>
 
 <script setup>
