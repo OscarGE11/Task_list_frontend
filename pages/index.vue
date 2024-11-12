@@ -3,19 +3,22 @@
     <div>
       <h1 class="text-vue-green text-4xl font-bold text-center mb-10">Tasks</h1>
     </div>
-    <div class="flex justify-end" v-if="tasks.length > 0">
+    <div class="flex justify-end" >
       <button class="bg-vue-green text-black rounded-lg p-2 mt-5 justify-end mb-4 mr-2 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="orderByTime()">Order {{ orderAsc ? 'Ascending' : 'Descending' }}</button>
-      <button class="bg-vue-green text-black rounded-lg p-2 mt-5 justify-end mb-4 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="openModal">Add Task</button>
+      <button class="bg-vue-green text-black rounded-lg p-2 mt-5 justify-end mb-4 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" v-if="tasks.length > 0" @click="openModal">Add Task</button>
     </div>
+
+    
+    <div v-if="tasks.length === 0" class="flex justify-center items-center h-60 bg-card-grey bg-opacity-20 rounded-lg shadow-lg">
+      <p class="text-vue-green text-lg font-bold">No tienes tareas añadidas todavía</p>
+    </div>
+
+   
     <div class="flex flex-col md:flex-row justify-between gap-10" v-if="tasks.length > 0">
-      
       <div class="p-10 w-full">
-        
-          <h2 class="text-2xl font-bold text-vue-green mb-4 text-center">To do</h2>
-       
-        
+        <h2 class="text-2xl font-bold text-vue-green mb-4 text-center">To do</h2>
         <div class="flex flex-col" v-auto-animate>
-          <div  v-for="task in tasks.filter(task => !task.is_done)" :key="task.id" class="rounded-lg p-5 shadow-lg mb-4 bg-card-grey bg-opacity-20 hover:shadow-xl hover:bg-lighter-card-grey transition duration-150">
+          <div v-for="task in tasks.filter(task => !task.is_done)" :key="task.id" class="rounded-lg p-5 shadow-lg mb-4 bg-card-grey bg-opacity-20 hover:shadow-xl hover:bg-lighter-card-grey transition duration-150">
             <div class="flex justify-between items-center">
               <div>
                 <h1 class="text-2xl font-bold text-vue-green">{{ task.title }}</h1>
@@ -30,24 +33,16 @@
                   <font-awesome-icon icon="trash" class="text-vue-green text-xl hover:text-red transition duration-150"/>
                 </button>
                 <button @click="handleIsDone(task.id)">
-                  <font-awesome-icon icon="check" class="text-vue-green text-xl hover:text-yellow-200 trasition duration-150" title="Mark task as done"/>
+                  <font-awesome-icon icon="check" class="text-vue-green text-xl hover:text-yellow-200 transition duration-150" title="Mark task as done"/>
                 </button>
-                
               </div>
-
-
             </div>
           </div>
         </div>
-        
       </div>
-  
-      
-      <div class=" p-10 w-full">
-        
-          <h2 class="text-2xl font-bold text-vue-green mb-4 text-center">Done</h2>
-          
-       
+
+      <div class="p-10 w-full">
+        <h2 class="text-2xl font-bold text-vue-green mb-4 text-center">Done</h2>
         <div class="flex flex-col" v-auto-animate>
           <div v-for="task in tasks.filter(task => task.is_done)" :key="task.id" class="rounded-lg p-5 shadow-lg mb-4 bg-card-grey bg-opacity-20 hover:shadow-xl hover:bg-lighter-card-grey transition duration-150">
             <div class="flex justify-between items-center">
@@ -64,7 +59,7 @@
                   <font-awesome-icon icon="trash" class="text-vue-green text-xl hover:text-red transition duration-150"/>
                 </button>
                 <button @click="handleIsDone(task.id)">
-                  <font-awesome-icon icon="xmark" class="text-vue-green text-xl hover:text-yellow-200 trasition duration-150" title="Mark task as to do"/>
+                  <font-awesome-icon icon="xmark" class="text-vue-green text-xl hover:text-yellow-200 transition duration-150" title="Mark task as to do"/>
                 </button>
               </div>
             </div>
@@ -74,12 +69,13 @@
     </div>
     
     <Modal :isVisible="isModalVisible" @close="closeModal" @submit="handleSubmit" :task="currentTask"/>
-    
   </div>
+
   <div class="flex justify-end py-7 pr-20" v-if="tasks.length > 0">
     <button @click="logout" class="bg-vue-green text-black rounded-lg p-2 mx-auto justify-end mb-4 mr-28 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150">Logout</button>
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import Modal from './components/Modal.vue';
