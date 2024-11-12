@@ -61,7 +61,7 @@ const register = async () => {
     });
 
       
-      await router.push('/'); 
+      await router.push('/docs'); 
    
   } catch (error) {
     console.error("Error during registration", error);
