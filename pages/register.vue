@@ -51,35 +51,19 @@ const password = ref('');
 const passwordErrorState = ref(false);
 const passwordErrorMsg = ref('');
 
-
 const validatePassword = (password) => {
-  if (password.length === 0) {
-    return "Password cannot be empty";
-  }
-  if (password.length < 8) {
-    return "Password must be at least 8 characters long";
-  }
-  if (!/[A-Z]/.test(password)) {
-    return "Password must contain at least one uppercase letter";
-  }
-  if (!/\d/.test(password)) {
-    return "Password must contain at least one number";
-  }
-  return "Password is valid";
+  const regex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  return regex.test(password);
 };
 
 const register = async () => {
   try {
 
-  
-    const passwordValidationMsg = validatePassword(password.value);
-    if (passwordValidationMsg !== "Password is valid") {
-      passwordErrorState.value = true;
-      passwordErrorMsg.value = passwordValidationMsg;
-      return;
-    } else {
-      passwordErrorState.value = false;
-    }
+  if (!validatePassword(password.value)) {
+    passwordErrorState.value = true;
+    passwordErrorMsg.value = 'Password must contain at least one uppercase letter, one number and at least 8 characters';
+    return;
+  }
 
     const response = await $fetch('/register', {
       method: 'POST',
