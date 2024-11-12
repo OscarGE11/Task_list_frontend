@@ -29,7 +29,7 @@
           />
         </div>
         
-        <div class="h-6 mt-2 transition-opacity duration-300 ease-in-out" :class="passwordErrorState ? 'opacity-100' : 'opacity-0'">
+        <div class="w-full mt-2 transition-opacity duration-300 ease-in-out" :class="passwordErrorState ? 'opacity-100' : 'opacity-0'">
           <p class="text-red-500 text-sm">{{ passwordErrorMsg }}</p>
         </div>
         <button
