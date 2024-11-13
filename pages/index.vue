@@ -73,12 +73,13 @@
 
 
     <div class="flex justify-between">
+      <button class="bg-vue-green text-black rounded-lg p-2 mt-5 mb-4 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="openModal">
+        Add Task
+      </button>
   <button class="bg-vue-green text-black rounded-lg p-2 mt-5 mb-4 mr-2 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="orderByTime()" v-if="tasks.length > 0">
     Order {{ orderAsc ? 'Ascending' : 'Descending' }}
   </button>
-  <button class="bg-vue-green text-black rounded-lg p-2 mt-5 mb-4 hover:bg-opacity-80 hover:text-opacity-80 transition duration-150" @click="openModal">
-    Add Task
-  </button>
+  
 </div>
   </div>
   
