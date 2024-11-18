@@ -19,7 +19,7 @@
         <p>Don't have an account? <NuxtLink to="/register" class="text-vue-green hover:underline">Register</NuxtLink></p>
 
         <div class="mt-5">
-          <p class="text-red text-sm max-w-full overflow-hidden text-ellipsis" v-if="passwordErrorState">{{ passwordErrorMsg }}</p>
+          <p class="text-red text-sm max-w-full overflow-hidden text-ellipsis" v-if="loginErrorState">{{ loginErrorMsg }}</p>
         </div>
     </form>
    </div>
@@ -35,11 +35,14 @@ import { useRouter} from 'vue-router';
 const router = useRouter()
  const email = ref('')
  const password = ref('')
-
-
+ const loginErrorState = ref(false)
+ const loginErrorMsg = ref('')
 
 
 const login = async () => {
+
+  
+
     try {
       const response = await $fetch('/login', {
         method: 'POST',
@@ -63,6 +66,8 @@ const login = async () => {
           console.error("No token");
         }
       } else {
+        loginErrorState.value = true
+        loginErrorMsg.value = 'Invalid email or password'
         console.error("Login failed");
       }
 

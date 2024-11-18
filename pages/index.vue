@@ -1,6 +1,6 @@
 <template>
   <header class="container mx-auto mt-10 justify-between flex items-center">
-    <h1 class="text-vue-green text-4xl font-bold">Tasks</h1>
+    <h1 class="text-vue-green text-4xl font-bold">Task it!</h1>
     <span @click="logout" title="Logout" class="text-vue-green cursor-pointer font-bold text-2xl"><font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" /></span>
     
   </header>

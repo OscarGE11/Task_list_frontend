@@ -12,4 +12,12 @@ export default defineNuxtConfig({
     },
   },
   plugins: ['~/plugins/fontawesome.js'],
+  app: {
+    head: {
+      title: 'Task it!',
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      ],
+    }
+  }
 })
