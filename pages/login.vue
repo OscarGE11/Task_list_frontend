@@ -66,14 +66,15 @@ const login = async () => {
           console.error("No token");
         }
       } else {
-        loginErrorState.value = true
-        loginErrorMsg.value = 'Invalid email or password'
+        
         console.error("Login failed");
       }
 
     }
   catch (error) {
   console.error("Error logging in", error)
+  loginErrorState.value = true
+  loginErrorMsg.value = 'Invalid email or password'
     }
   }
 
