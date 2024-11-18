@@ -1,7 +1,7 @@
 <template>
   <header class="container mx-auto mt-10 justify-between flex items-center">
     <div class="flex items-center gap-3">
-      <img src="/assets/images/Taskit.png" alt="Logo" class="h-20 w-20 rounded-full">
+      <img src="/assets/images/Taskit.png" alt="Logo" class="h-14 w-auto" />
       <h1 class="text-vue-green text-4xl font-bold">Task it!</h1>
     </div>
     <span @click="logout" title="Logout" class="text-vue-green cursor-pointer font-bold text-2xl">
